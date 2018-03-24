@@ -7,16 +7,50 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-
-
 app.get('/', function(req,res){
 })
 
 app.post('/interpret', function(req, res){
   var src = req.body.src
   var tokenized = tokenize(src)
-  console.log(tokenized)
-  res.send(tokenized)
+  var reorganized = {}
+  var last_identifier = ""
+  var open_paren = false
+  var dot_operator = false
+
+  for (x=0; x<tokenized.length; x++){
+    var token = tokenized[x]
+    console.log(token)
+    var same = JSON.parse(token)
+    var type = same.type
+    var source = same.source
+
+    if(type == "whitespace"){
+      continue
+    }
+    if(type == "identifier" && open_paren == false){
+      reorganized[source] = []
+      last_identifier = source
+    }
+
+    if(open_paren == true && source != ")" && type != "operator"){
+      reorganized[last_identifier].push(source)
+    }
+
+    if(source == "("){
+      open_paren = true
+    }
+    else if(source == ")") {
+      open_paren = false
+    }
+
+    // if(type == "operator" && source == "."){
+
+    // }
+  }
+  console.log(reorganized)
+
+  res.send(reorganized)
 })
 
 app.listen(8000)
