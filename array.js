@@ -17,6 +17,8 @@ app.post('/interpret', function(req, res){
   var last_identifier = ""
   var open_paren = false
   var dot_operator = false
+  var dot_original = ""
+  var dot_after = ""
 
   for (x=0; x<tokenized.length; x++){
     var token = tokenized[x]
@@ -29,8 +31,12 @@ app.post('/interpret', function(req, res){
       continue
     }
     if(type == "identifier" && open_paren == false){
+      if(dot_operator == true){
+        dot_after = source
+      }
       reorganized[source] = []
       last_identifier = source
+      reorganized[source]["dot"] = false
     }
 
     if(open_paren == true && source != ")" && type != "operator"){
@@ -44,10 +50,18 @@ app.post('/interpret', function(req, res){
       open_paren = false
     }
 
-    // if(type == "operator" && source == "."){
-
-    // }
+    if(type == "operator" && source == "."){
+      dot_original = last_identifier
+      dot_operator = true
+    }
   }
+
+  if(dot_operator == true){
+    reorganized[dot_original][dot_after] = reorganized[dot_after]
+    reorganized[dot_original]["dot"] = true
+    delete reorganized[dot_after]
+  }
+
   console.log(reorganized)
 
   res.send(reorganized)
