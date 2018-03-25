@@ -1,19 +1,34 @@
 var cheerio = require('cheerio');
 var request = require('request');
 
+// let arr = []
+
+const base = 'https://www.arduino.cc/reference/en'
 request({
     method: 'GET',
-    url: 'https://www.arduino.cc/reference/en/language/functions/digital-io/digitalwrite/'
+    url: base
 }, function(err, response, body) {
     if (err) return console.error(err);
     $ = cheerio.load(body);
-    console.log($.html())
-    console.log("asdf")
-    console.log($('.content').text())
-
-    x = $('.content').text()
-	var separators = ['Syntax', 'Description', 'Parameters', 'Returns'];
-	var tokens = x.split(new RegExp(separators.join('|'), 'g'));
-	tokens.shift()
-	tokens.pop()
+    $('#functions').find('a').each(function(i, elm) {
+	    console.log($(this).attr('href').slice(2))
+	});
+    console.log('----')
 });
+
+// request({
+//     method: 'GET',
+//     url: base + '/language/functions/digital-io/digitalwrite/'
+// }, function(err, response, body) {
+//     if (err) return console.error(err);
+//     $ = cheerio.load(body);
+
+//     x = $('.content').text()
+// 	var separators = ['Syntax', 'Description', 'Parameters', 'Returns'];
+// 	var tokens = x.split(new RegExp(separators.join('|'), 'g'));
+// 	tokens.shift()
+// 	tokens.pop()
+
+// 	console.log(tokens)
+// 	// arr.push(tokens.toString())
+// });
