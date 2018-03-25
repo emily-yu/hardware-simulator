@@ -122,9 +122,19 @@ $(document).ready(function(){
                       var rotate = data["rotate"]
                       var sentence = data["sentence"]
                       console.log(sentence)
-                      document.getElementById('message').innerHTML += '<br><br>' + sentence
 
-                      new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+                      // light code -- timeout for delay time
+                      if (data.light > 0) {
+                          light.intensity = 5
+                          setTimeout(() => {
+                            light.intensity = 1
+                          }, data.delay);
+                      }
+                      // servo code -- turn it
+                      else {
+                          new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+                      }
+                      document.getElementById('message').innerHTML += '<br><br>' + sentence
                     }
                   });
 //make some post request to me with important words function and params
@@ -161,7 +171,7 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
   <script>
 
     // Set up the scene, camera, and renderer as global variables.
-    var scene, camera, renderer, mesh_public;
+    var scene, camera, renderer, mesh_public, light;
 
     init();
     animate();
@@ -197,7 +207,7 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
       renderer.setClearColorHex(0x333F47, 1);
 
       // Create a light, set its position, and add it to the scene.
-      var light = new THREE.PointLight(0xffffff);
+      light = new THREE.PointLight(0xffffff);
       light.position.set(-100,200,100);
       scene.add(light);
 
@@ -211,6 +221,7 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
         scene.add(mesh);
 
         $('#testing').click(function(){
+          light.intensity = 5
             new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(90)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
             })
         });
