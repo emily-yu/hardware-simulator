@@ -34,6 +34,9 @@ $(function() {
 var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
 var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
+const node_ngrok = 'http://54945da7.ngrok.io'
+const python_ngrok = 'http://1aee12a1.ngrok.io'
+
 console.log(document.getElementById("REEE").text)
 $(document).ready(function(){
     $('#disco').click(() => {
@@ -140,7 +143,7 @@ $(document).ready(function(){
               }
               console.log(JSON.stringify(options))
               $.ajax({
-                url: "https://cors-anywhere.herokuapp.com/http://54945da7.ngrok.io/interpret",
+                url: "https://cors-anywhere.herokuapp.com/" + node_ngrok + "/interpret",
                 type: 'POST',
                 data: JSON.stringify(options),
                 headers:{
@@ -173,7 +176,7 @@ $(document).ready(function(){
 
 
                   $.ajax({
-                    url: "https://cors-anywhere.herokuapp.com/http://1aee12a1.ngrok.io/sentence",
+                    url: "https://cors-anywhere.herokuapp.com/" + python_ngrok + "/sentence",
                     type: 'POST',
                     data: JSON.stringify(function_info),
                     headers:{
