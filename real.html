@@ -1,0 +1,66 @@
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+<textarea id= "REEE">
+
+</textarea>
+<button id="button">
+  compile
+</button>
+
+
+<script>
+
+var postData = {
+  script:'printf(\"hello world\")',
+  language:'c',
+  versionIndex:'0',
+  clientId:client,
+  clientSecret:secret
+}
+
+var options = {
+  method:'post',
+  url: 'https://api.jdoodle.com/v1/execute',
+  headers: {
+    'Content-Type': 'application/json',
+    'charset' : 'UTF-8'
+  },
+  body: JSON.stringify(postData)
+};
+
+
+$(document).ready(function(){
+    $("button").click(function(){
+      var options = {
+        script: document.getElementById("REEE").value,
+        language: "c",
+        versionIndex:'0',
+        clientId:client,
+        clientSecret:secret
+      }
+      console.log(JSON.stringify(options))
+        $.ajax({
+            url: 'https://api.jdoodle.com/v1/execute',
+            type: 'post',
+            data: JSON.stringify(options),
+            headers: {
+              'Content-Type': 'application/json',
+              'charset' : 'UTF-8'
+            },
+            success: function (data) {
+              console.log(data);
+            },
+            error:function(e){
+              console.log(e)
+            }
+        });
+    });
+});
+
+</script>
+</body>
+</html>
