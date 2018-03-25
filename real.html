@@ -34,7 +34,7 @@ $(function() {
 var client = "9103bae3380b17ceeef1db995419df20"
 var secret = "fe5ea8fe380d5076f0ef29ca4b968619069f4e0f94d2b15d4ac368695750cb97"
 
-const node_ngrok = 'http://54945da7.ngrok.io'
+const node_ngrok = 'http://69d674a0.ngrok.io'
 const python_ngrok = 'http://1aee12a1.ngrok.io'
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 
@@ -49,13 +49,13 @@ $(document).ready(function(){
 
           let selector = Math.floor(Math.random() * 3)
           switch (selector) {
-            case 0: 
+            case 0:
               new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
               break;
-            case 1: 
+            case 1:
               new TWEEN.Tween( mesh.rotation ).to( {  y:  mesh.rotation.y + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
               break;
-            default: 
+            default:
               new TWEEN.Tween( mesh.rotation ).to( {  z:  mesh.rotation.z + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
               break;
 
