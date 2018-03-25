@@ -30,10 +30,10 @@ $(document).ready(function(){
     $("#button").click(function(){
       var code = document.getElementById("REEE").value
 
-      // if (code.text === undefined) {
-      //   document.getElementById("message").innerHTML = "no code entered"
-      //   return;
-      // }
+      if (!$.trim($("#REEE").val())) {
+        document.getElementById("message").innerHTML = "no code entered"
+        return;
+      }
 
       var options = {
         script: code,
