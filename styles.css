@@ -7,15 +7,17 @@ body {
 textarea {
     background-color: black;
     color: white;
-    min-width: 100%;
+    min-width: 99%;
     min-height: 40%;
     max-height: 60%;
     font-family: 'Source Code Pro', monospace;
+    border: none;
 }
 
 div.top {
     /*margin: 20px;*/
     min-width: 50%;
+    display: flex;
 }
 div.bottom {
 	display: flex;
@@ -24,6 +26,14 @@ div.threejs > p {
     width: 50%;
     min-height: 40%;
     color: white;
+}
+
+div.line-numbers > p {
+    background: black;
+    color: white;
+    padding-right: 2px;
+    font-size: 12px;
+    margin: 0;
 }
 
 nav {
