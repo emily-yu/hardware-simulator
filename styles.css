@@ -44,7 +44,7 @@ button {
     font-family: 'Source Code Pro', monospace;
 }
 button:hover {
-	background: blue;
+	background: slategrey;
 }
 
 p#message {

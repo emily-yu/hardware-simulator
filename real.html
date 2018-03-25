@@ -8,7 +8,7 @@
 <body>
 <nav>
   <button id="button">compile</button>
-  <button id = 'testing'></button>
+  <button id = 'testing'>Rotate</button>
 </nav>
 <div class = 'top'>
   <textarea id= "REEE"></textarea>
@@ -25,9 +25,15 @@
 var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
 var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
+console.log(document.getElementById("REEE").text)
 $(document).ready(function(){
     $("#button").click(function(){
       var code = document.getElementById("REEE").value
+
+      if (code.text === undefined) {
+        document.getElementById("message").innerHTML = "no code entered"
+        return;
+      }
 
       var options = {
         script: code,
