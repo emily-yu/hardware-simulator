@@ -40,8 +40,9 @@ var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
 $(document).ready(function(){
     $("button").click(function(){
+      var code = document.getElementById("REEE").value
       var options = {
-        script: document.getElementById("REEE").value,
+        script: code,
         language: "c",
         versionIndex:'0',
         clientId:client,
@@ -61,9 +62,10 @@ $(document).ready(function(){
               var noImport = "No such file or directory"
               if(data["output"].includes(noImport)){
                 document.getElementById("message").innerHTML = "pass"
+                var lines = subject.split();
+
               }
               else{
-                console.log("heyo")
                 document.getElementById("message").innerHTML = data["output"]
               }
             }
