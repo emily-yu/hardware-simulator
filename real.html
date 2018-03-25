@@ -194,16 +194,13 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
         // mesh_public.rotateX( Math.PI / 2 );
         scene.add(mesh);
 
-            $('#testing').click(function(){
-      console.log('boi')
-      // mesh_public.rotateX( Math.PI / 2 );
-      // var cube = mesh
-                      new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + 90}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
-                new TWEEN.Tween( camera.rotation ).to( { z:  camera.rotation.z + 90}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
-    })
-      });
-      // Add OrbitControls so that we can pan around with the mouse.
-      controls = new THREE.OrbitControls(camera, renderer.domElement);
+        $('#testing').click(function(){
+            new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(90)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+            })
+        });
+      
+        // Add OrbitControls so that we can pan around with the mouse.
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
     }
 
 
@@ -218,6 +215,10 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
       controls.update();
       TWEEN.update()
 
+    }
+
+    function toRadians(degrees) {
+      return degrees * (Math.PI/180);
     }
 
   </script>
