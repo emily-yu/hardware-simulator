@@ -12,6 +12,8 @@ textarea {
     max-height: 60%;
     font-family: 'Source Code Pro', monospace;
     border: none;
+        margin-left: 52px;
+    margin-top: -288px;
 }
 
 div.top {
