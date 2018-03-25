@@ -259,8 +259,7 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
         scene.add(mesh);
 
         $('#testing').click(function(){
-          light.intensity = 5
-            new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(90)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+            new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + 90}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
             })
         });
 
