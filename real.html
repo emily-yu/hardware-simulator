@@ -3,6 +3,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!--   <link rel="stylesheet" type="text/css" href="styles.css"> -->
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet">
+  <script src="jquery-linedtextarea.js"></script>
+  <link href="jquery-linedtextarea.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -10,14 +12,9 @@
   <button id="button">compile</button>
   <button id = 'testing'>Rotate</button>
 </nav>
-<div class = 'top'>
-  <div class = 'line-numbers'>
-    <p>1</p>
-    <p>2</p>
-    <p>3</p>
-  </div>
+<!-- <div class = 'top'> -->
   <textarea id= "REEE"></textarea>
-</div>
+<!-- </div> -->
 <div class = 'bottom'>
   <p id="message"></p>
   <div class = 'threejs'>
@@ -27,6 +24,11 @@
 
 
 <script>
+$(function() {
+	$("#REEE").linedtextarea(
+	);
+});
+
 var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
 var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
