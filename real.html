@@ -198,9 +198,10 @@ $(document).ready(function(){
                           new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
                       }
                       document.getElementById('message').innerHTML += '<br><br>' + sentence
+                      document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+
                     }
                   });
-//make some post request to me with important words function and params
                 }
               });
             }
