@@ -27,10 +27,10 @@ with open('functions.txt') as f:
 
 def sentencify(params, functions):
     dictionary = {}
+    rotate = 0
+
     params = json.loads(params)
-
     functions = functions.split(',')
-
     for x in range(0,len(functions)):
         param = params[x]
         function = functions[x].strip("[").strip("]").strip("\"")
@@ -42,12 +42,17 @@ def sentencify(params, functions):
         if(key in names):
             index = names.index(key)
             syntax = syntaxes[index]
-            print (syntax)
-            same2 = syntax.split(': ')[1]
-            sentence += "The program will " + descriptions[index].lower() + "Where the parameter, " + syntax + "is " + dictionary[key][0] + ". "
+            if(syntax.strip() != ""):
+                same2 = syntax.split(': ')[1]
+                sentence += "The program will " + descriptions[index].lower() + "Where the parameter, " + syntax + "is " + dictionary[key][0] + ". "
+            else:
+                sentence += "The program will " + descriptions[index].lower()
+            if(key == "write"):
+                rotate = int(dictionary[key][0])
         else:
             sentence += "The program will do " + key + ". "
-    return sentence
+
+    return sentence, rotate
 
 
 @route('/')
@@ -64,9 +69,9 @@ def sentence():
     params = jsonObj["params"]
     functions = jsonObj["functions"]
 
-    sentence = sentencify(params, functions)
+    sentence,rotate = sentencify(params, functions)
 
-    return sentence
+    return {"sentence":sentence, "rotate":rotate}
 
 
 run(host='localhost', port=5000)

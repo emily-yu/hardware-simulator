@@ -30,10 +30,10 @@ $(document).ready(function(){
     $("#button").click(function(){
       var code = document.getElementById("REEE").value
 
-      if (code.text === undefined) {
-        document.getElementById("message").innerHTML = "no code entered"
-        return;
-      }
+      // if (code.text === undefined) {
+      //   document.getElementById("message").innerHTML = "no code entered"
+      //   return;
+      // }
 
       var options = {
         script: code,
@@ -113,7 +113,12 @@ $(document).ready(function(){
                     },
                     success: function(data) {
                       console.log(data)
-                      
+                      console.log(data["rotate"])
+                      var rotate = data["rotate"]
+                      var sentence = data["sentence"]
+                      console.log(sentence)
+
+                      new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
                     }
                   });
 //make some post request to me with important words function and params
