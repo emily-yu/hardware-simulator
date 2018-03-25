@@ -30,7 +30,7 @@ $(document).ready(function(){
     $("#button").click(function(){
       var code = document.getElementById("REEE").value
 
-      if (code.text === undefined) {
+      if (!$.trim($("#REEE").val())) {
         document.getElementById("message").innerHTML = "no code entered"
         return;
       }
