@@ -1,0 +1,6 @@
+detach() <split>Detach the Servo variable from its pin.  If all Servo variables are detached, then pins 9 and 10 can be used for PWM output with analogWrite(). <split>
+read() <split>Read the current angle of the servo (the value passed to the last call to write()). <split>
+write(angle) <split>Writes a value to the servo, controlling the shaft accordingly.  On a standard servo, this will set the angle of the shaft (in degrees), moving the shaft to that orientation.  On a continuous rotation servo, this will set the speed of the servo (with 0 being full-speed in one direction, 180 being full speed in the other, and a value near 90 being no movement). <split>
+attached() <split>Check whether the Servo variable is attached to a pin. <split>
+writeMicroseconds(uS) <split>Writes a value in microseconds (uS) to the servo, controlling the shaft accordingly. <split>
+attach(pin) <split>Attach the Servo variable to a pin. <split>
