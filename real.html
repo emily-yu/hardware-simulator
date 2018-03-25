@@ -31,11 +31,12 @@ $(function() {
 	);
 });
 
-var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
-var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
+var client = "9103bae3380b17ceeef1db995419df20"
+var secret = "fe5ea8fe380d5076f0ef29ca4b968619069f4e0f94d2b15d4ac368695750cb97"
 
 const node_ngrok = 'http://54945da7.ngrok.io'
 const python_ngrok = 'http://1aee12a1.ngrok.io'
+const proxy = 'https://cors-anywhere.herokuapp.com/'
 
 console.log(document.getElementById("REEE").text)
 $(document).ready(function(){
@@ -78,7 +79,7 @@ $(document).ready(function(){
       }
 
       $.ajax({
-          url: 'https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute',
+          url: proxy + 'https://api.jdoodle.com/v1/execute',
           type: 'post',
           data: JSON.stringify(options),
           headers: {
@@ -115,7 +116,7 @@ $(document).ready(function(){
       }
 
       $.ajax({
-          url: 'https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute',
+          url: proxy + 'https://api.jdoodle.com/v1/execute',
           type: 'post',
           data: JSON.stringify(options),
           headers: {
@@ -143,7 +144,7 @@ $(document).ready(function(){
               }
               console.log(JSON.stringify(options))
               $.ajax({
-                url: "https://cors-anywhere.herokuapp.com/" + node_ngrok + "/interpret",
+                url: proxy + node_ngrok + "/interpret",
                 type: 'POST',
                 data: JSON.stringify(options),
                 headers:{
@@ -176,7 +177,7 @@ $(document).ready(function(){
 
 
                   $.ajax({
-                    url: "https://cors-anywhere.herokuapp.com/" + python_ngrok + "/sentence",
+                    url: proxy + python_ngrok + "/sentence",
                     type: 'POST',
                     data: JSON.stringify(function_info),
                     headers:{
