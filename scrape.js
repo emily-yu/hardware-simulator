@@ -26,11 +26,12 @@ const general_data = (callback) => {
 				var tokens = x.split(new RegExp(separators.join('|'), 'g'));
 				tokens.shift()
 				tokens.pop()
+				console.log(tokens)
 
 				function_data.push(tokens)
 				var data = {
-					name: tokens[0],
-					description: tokens[1],
+					description: tokens[0],
+					name: tokens[1],
 					syntax: tokens[2]
 				}
 				// callback(function_data)

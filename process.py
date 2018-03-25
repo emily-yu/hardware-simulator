@@ -1,0 +1,9 @@
+with open ('general_func.txt') as f:
+    same = f.read()
+    same = same.replace("\\n", "").replace("\\t", "").replace("\\r", "").replace("\\v", "").replace('\"\\\"', '\"\\\\\"')
+    same = same.replace("}", "},")
+    same = "[" + same + "]"
+
+
+with open('general_func.txt', 'w') as f:
+    f.write(same)
