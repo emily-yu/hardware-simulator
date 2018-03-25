@@ -51,41 +51,72 @@ $(document).ready(function(){
             var noImport = "No such file or directory"
             if(data["output"].includes(noImport) || data["output"] == ""){
               document.getElementById("message").innerHTML = "pass"
-              var lines = code.split("/\r?\n/");
-              console.log(lines)
-              for (var line in lines){
-                if(line.replace(/\s/g, "") == ""){
-                  continue
-                }
-                var options = {
-                  src: code
-                }
-                console.log(JSON.stringify(options))
-                $.ajax({
-                  url: "https://cors-anywhere.herokuapp.com/http://54945da7.ngrok.io/interpret",
-                  type: 'POST',
-                  data: JSON.stringify(options),
-                  headers:{
-                    'Content-Type':'application/json'
-                  },
-                  success: function(data) {
-                    data = JSON.parse(data)
-
-                    var importantwords = {};
-
-                    for (var x in data){
-                      if(data[x]["params"].length != 0){
-                        importantwords[x] = data[x]
-                      }
-                    }
-//make some post request to me with important words function and params
-                  }
-                });
-              }
             }
             else{
               document.getElementById("message").innerHTML = data["output"]
             }
+
+            var lines = code.split("/\r?\n/");
+
+            for (var line in lines){
+              if(line.replace(/\s/g, "") == ""){
+                continue
+              }
+              var options = {
+                src: code
+              }
+              console.log(JSON.stringify(options))
+              $.ajax({
+                url: "https://cors-anywhere.herokuapp.com/http://54945da7.ngrok.io/interpret",
+                type: 'POST',
+                data: JSON.stringify(options),
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                success: function(data) {
+                  data = JSON.parse(data)
+
+                  var importantwords = {};
+                  var params = {}
+                  for (var x in data){
+                    if(data[x]["params"].length != 0){
+                      importantwords[x] = data[x]
+                      params[x] = data[x]["params"]
+                    }
+                  }
+                  console.log(params)
+                  var keys = Object.keys(params)
+                  console.log(keys)
+                  var real_params = []
+                  for (var x in params){
+                    real_params.push(params[x])
+                  }
+
+
+                  var function_info = {
+                    functions: JSON.stringify(keys),
+                    params: JSON.stringify(real_params)
+                  }
+                  console.log(JSON.stringify(function_info))
+
+
+                  $.ajax({
+                    url: "https://cors-anywhere.herokuapp.com/http://1aee12a1.ngrok.io/sentence",
+                    type: 'POST',
+                    data: JSON.stringify(function_info),
+                    headers:{
+                      'Content-Type':'application/json'
+                    },
+                    success: function(data) {
+                      console.log(data)
+                      data = JSON.parse(data)
+                    }
+                  });
+//make some post request to me with important words function and params
+                }
+              });
+            }
+
           }
       });
     });
@@ -161,7 +192,7 @@ function httpPost(url, code){
 
       // Read more about requestAnimationFrame at http://www.paulirish.com/2011/requestanimationframe-for-smart-animating/
       requestAnimationFrame(animate);
-      
+
       // Render the scene.
       renderer.render(scene, camera);
       controls.update();
