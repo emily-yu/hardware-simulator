@@ -39,7 +39,7 @@ $(document).ready(function(){
       }
 
       $.ajax({
-          url: 'https://api.jdoodle.com/v1/execute',
+          url: 'https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute',
           type: 'post',
           data: JSON.stringify(options),
           headers: {
@@ -62,7 +62,7 @@ $(document).ready(function(){
                 }
                 console.log(JSON.stringify(options))
                 $.ajax({
-                  url: "http://54945da7.ngrok.io/interpret",
+                  url: "https://cors-anywhere.herokuapp.com/http://54945da7.ngrok.io/interpret",
                   type: 'POST',
                   data: JSON.stringify(options),
                   headers:{
