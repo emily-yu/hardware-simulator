@@ -18,15 +18,13 @@ app.post('/interpret', function(req, res){
   var last_identifier = ""
   var open_paren = false
   var dot_operator = false
-  var dot_original = ""
-  var dot_after = ""
 
   var first_token = JSON.parse(tokenized[0])
   const types = ["int", "String", "float", "double", "bool", "char", "void", "Servo"]
   console.log(first_token)
   console.log(types.indexOf(first_token.source))
   if(types.indexOf(first_token.source) != -1 && first_token.source == identifier){
-
+    reorganized[dot_original]["type"] = "variable"
   }
   else{
     for (x=0; x<tokenized.length; x++){
@@ -40,19 +38,16 @@ app.post('/interpret', function(req, res){
         continue
       }
       if(type == "identifier" && open_paren == false){
-        if(dot_operator == true){
-          dot_after = source
-        }
+        // if(dot_operator == true){
+          // dot_after = source
+        // }
         reorganized[source] = {}
         last_identifier = source
-        reorganized[source]["dot"] = false
         reorganized[source]["type"] = "function"
         reorganized[last_identifier]["params"] = []
       }
 
       if(open_paren == true && source != ")" && type != "operator"){
-        console.log(source)
-        console.log(reorganized[last_identifier])
         reorganized[last_identifier]["params"].push(source)
       }
 
@@ -70,10 +65,8 @@ app.post('/interpret', function(req, res){
     }
 
     if(dot_operator == true){
-      reorganized[dot_original][dot_after] = reorganized[dot_after]
-      reorganized[dot_original]["dot"] = true
-      // reorganized[dot_original] = JSON.stringify(reorganized[dot_original])
-      delete reorganized[dot_after]
+      delete reorganized[dot_original]
+      console.log(reorganized)
     }
   }
 

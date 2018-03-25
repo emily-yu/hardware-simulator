@@ -1,8 +1,6 @@
 var cheerio = require('cheerio');
 var request = require('request');
 
-// let arr = []
-
 const base = 'https://www.arduino.cc/reference/en'
 request({
     method: 'GET',
