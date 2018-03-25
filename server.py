@@ -65,8 +65,8 @@ def sentence():
     functions = jsonObj["functions"]
 
     sentence = sentencify(params, functions)
-    
-    return {"sentence":sentence}
+
+    return sentence
 
 
 run(host='localhost', port=5000)
