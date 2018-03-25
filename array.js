@@ -12,8 +12,9 @@ app.get('/', function(req,res){
 
 app.post('/interpret', function(req, res){
   var src = req.body.src
+  console.log(src)
   var tokenized = tokenize(src)
-  console.log(tokenized)
+  // console.log(tokenized)
   var reorganized = {}
   var last_identifier = ""
   var open_paren = false

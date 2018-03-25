@@ -1,38 +1,22 @@
-//ignore this whole fucking thing and make it on front end
-var request = require('request');
-// const app = express()
+var express = require('express')
+var bodyParser = require('body-parser')
+const app = express()
 
-var client = process.env.jdoodle_client
-var secret = process.env.jdoodle_secret
+var engines = require('consolidate');
 
+app.use(express.static(__dirname));
+app.set('view engine', 'hbs');
+app.set('views', __dirname);
+app.engine('html', engines.mustache);
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
-function crequest(script, callback){
-  var postData = {
-    script:'printf(\"hello world\")',
-    language:'c',
-    versionIndex:'0',
-    clientId:client,
-    clientSecret:secret
-  }
+app.get('/', function(req,res){
+  res.render("real.html")
+})
 
-  var options = {
-    method:'post',
-    url: 'https://api.jdoodle.com/v1/execute',
-    headers: {
-      'Content-Type': 'application/json',
-      'charset' : 'UTF-8'
-    },
-    body: JSON.stringify(postData)
-  };
-
-  request(options, function (err, res, body) {
-    if (err) {
-      console.error('error posting json: ', err)
-      throw err
-    }
-    var headers = res.headers
-    var statusCode = res.statusCode
-    callback(body)
-  })
-}
+app.listen(3000)
+console.log('3000')

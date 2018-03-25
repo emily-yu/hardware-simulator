@@ -2,37 +2,6 @@ var cheerio = require('cheerio');
 var request = require('request');
 var fs = require('fs')
 
-<<<<<<< HEAD
-const base = 'https://www.arduino.cc/reference/en'
-request({
-    method: 'GET',
-    url: base
-}, function(err, response, body) {
-    if (err) return console.error(err);
-    $ = cheerio.load(body);
-    $('#functions').find('a').each(function(i, elm) {
-	    console.log($(this).attr('href').slice(2))
-	});
-    console.log('----')
-});
-
-// request({
-//     method: 'GET',
-//     url: base + '/language/functions/digital-io/digitalwrite/'
-// }, function(err, response, body) {
-//     if (err) return console.error(err);
-//     $ = cheerio.load(body);
-
-//     x = $('.content').text()
-// 	var separators = ['Syntax', 'Description', 'Parameters', 'Returns'];
-// 	var tokens = x.split(new RegExp(separators.join('|'), 'g'));
-// 	tokens.shift()
-// 	tokens.pop()
-
-// 	console.log(tokens)
-// 	// arr.push(tokens.toString())
-// });
-=======
 // scrape functions
 const general_data = (callback) => {
 	const base = 'https://www.arduino.cc/reference/en'
@@ -122,4 +91,3 @@ servo_data((data) => {
 	   if (err) return console.log(err);
 	});
 })
->>>>>>> 24ffce703685ea60256a7ad8501fc934a23b51c3

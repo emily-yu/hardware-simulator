@@ -16,31 +16,13 @@
 
 
 <script>
-
-var postData = {
-  script:'printf(\"hello world\")',
-  language:'c',
-  versionIndex:'0',
-  clientId:client,
-  clientSecret:secret
-}
-
-var options = {
-  method:'post',
-  url: 'https://api.jdoodle.com/v1/execute',
-  headers: {
-    'Content-Type': 'application/json',
-    'charset' : 'UTF-8'
-  },
-  body: JSON.stringify(postData)
-};
-
 var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
 var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
 $(document).ready(function(){
     $("button").click(function(){
       var code = document.getElementById("REEE").value
+
       var options = {
         script: code,
         language: "c",
@@ -48,31 +30,63 @@ $(document).ready(function(){
         clientId:client,
         clientSecret:secret
       }
-      console.log(JSON.stringify(options))
-        $.ajax({
-            url: 'https://api.jdoodle.com/v1/execute',
-            type: 'post',
-            data: JSON.stringify(options),
-            headers: {
-              'Content-Type': 'application/json',
-              'charset' : 'UTF-8'
-            },
-            success: function (data) {
-              console.log(data);
-              var noImport = "No such file or directory"
-              if(data["output"].includes(noImport)){
-                document.getElementById("message").innerHTML = "pass"
-                var lines = subject.split();
 
-              }
-              else{
-                document.getElementById("message").innerHTML = data["output"]
+      $.ajax({
+          url: 'https://api.jdoodle.com/v1/execute',
+          type: 'post',
+          data: JSON.stringify(options),
+          headers: {
+            'Content-Type': 'application/json',
+            'charset' : 'UTF-8'
+          },
+          success: function (data) {
+            console.log(data);
+            var noImport = "No such file or directory"
+            if(data["output"].includes(noImport) || data["output"] == ""){
+              document.getElementById("message").innerHTML = "pass"
+              var lines = code.split("/\r?\n/");
+              console.log(lines)
+              for (var line in lines){
+                if(line.replace(/\s/g, "") == ""){
+                  continue
+                }
+                var options = {
+                  src: code
+                }
+                console.log(JSON.stringify(options))
+                $.ajax({
+                  url: "http://54945da7.ngrok.io/interpret",
+                  type: 'POST',
+                  data: JSON.stringify(options),
+                  headers:{
+                    'Content-Type':'application/json'
+                  },
+                  success: function(data) {
+                    data = JSON.parse(data)
+
+                    var importantwords = {};
+
+                    for (var x in data){
+                      if(data[x]["params"].length != 0){
+                        importantwords[x] = data[x]
+                      }
+                    }
+//make some post request to me with important words function and params 
+                  }
+                });
               }
             }
-        });
+            else{
+              document.getElementById("message").innerHTML = data["output"]
+            }
+          }
+      });
     });
 });
 
+function httpPost(url, code){
+
+}
 </script>
 </body>
 </html>
