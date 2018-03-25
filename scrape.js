@@ -1,5 +1,6 @@
 var cheerio = require('cheerio');
 var request = require('request');
+var fs = require('fs')
 
 // scrape functions
 const general_data = (callback) => {
@@ -27,7 +28,13 @@ const general_data = (callback) => {
 				tokens.pop()
 
 				function_data.push(tokens)
-				callback(JSON.stringify(function_data))
+				var data = {
+					name: tokens[0],
+					description: tokens[1],
+					syntax: tokens[2]
+				}
+				// callback(function_data)
+				callback(data)
 			});
 		});
 	});
@@ -60,15 +67,27 @@ const servo_data = (callback) => {
 
 			// console.log(tokens)
 			function_data.push(tokens)
-			callback(JSON.stringify(function_data))
+			var data = {
+				name: tokens[0],
+				description: tokens[1],
+				syntax: tokens[2]
+			}
+			// callback(function_data)
+			callback(data)
 		});
 	}
 }
 
-// general_data((data) => {
-// 	console.log(data)
-// })
+// dump general functions to file general_func.txt
+general_data((data) => {
+	fs.appendFile('general_func.txt', JSON.stringify(data), function (err) {
+	   if (err) return console.log(err);
+	});
+})
 
-// servo_data((data) => {
-// 	console.log(data)
-// })
+// dump servo functions to file servo_func.txt
+servo_data((data) => {
+	fs.appendFile('servo_func.txt', JSON.stringify(data), function (err) {
+	   if (err) return console.log(err);
+	});
+})
