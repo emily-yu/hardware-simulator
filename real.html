@@ -11,7 +11,8 @@
 <nav>
   <button id="button">run</button>
   <button id='compile'>compile</button>
-  <button id = 'testing'>Rotate</button>
+  <button id = 'testing'>rotate</button>
+  <button id = 'disco'>disco</button>
 </nav>
 <!-- <div class = 'top'> -->
   <textarea id= "REEE"></textarea>
@@ -35,6 +36,28 @@ var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
 console.log(document.getElementById("REEE").text)
 $(document).ready(function(){
+    $('#disco').click(() => {
+        setInterval(function() {
+          let light_color = '0x'+(Math.random()*0xFFFFFF<<0).toString(16);
+          let background_color = '0x'+(Math.random()*0xFFFFFF<<0).toString(16);
+          renderer.setClearColorHex(parseInt(background_color), 1);
+          light.color.setHex(light_color)
+
+          let selector = Math.floor(Math.random() * 3)
+          switch (selector) {
+            case 0: 
+              new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+              break;
+            case 1: 
+              new TWEEN.Tween( mesh.rotation ).to( {  y:  mesh.rotation.y + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+              break;
+            default: 
+              new TWEEN.Tween( mesh.rotation ).to( {  z:  mesh.rotation.z + Math.floor(Math.random() * 200)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+              break;
+
+          }
+        }, 1000);
+    })
     $('#compile').click(() => {
       var code = document.getElementById("REEE").value
 
