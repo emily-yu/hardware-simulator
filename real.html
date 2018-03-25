@@ -117,6 +117,7 @@ $(document).ready(function(){
                       var rotate = data["rotate"]
                       var sentence = data["sentence"]
                       console.log(sentence)
+                      document.getElementById('message').innerHTML += '<br><br>' + sentence
 
                       new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
                     }
