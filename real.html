@@ -10,6 +10,9 @@
 <button id="button">
   compile
 </button>
+<p id="message">
+
+</p>
 
 
 <script>
@@ -32,6 +35,8 @@ var options = {
   body: JSON.stringify(postData)
 };
 
+var client = "db6c4e08d127f46b3ccffdbb55ba7df3"
+var secret = "53f2a59444066477d9d17a7e773b4899b4ea7592dfc9dad62907ead3834298a"
 
 $(document).ready(function(){
     $("button").click(function(){
@@ -53,9 +58,14 @@ $(document).ready(function(){
             },
             success: function (data) {
               console.log(data);
-            },
-            error:function(e){
-              console.log(e)
+              var noImport = "No such file or directory"
+              if(data["output"].includes(noImport)){
+                document.getElementById("message").innerHTML = "pass"
+              }
+              else{
+                console.log("heyo")
+                document.getElementById("message").innerHTML = data["output"]
+              }
             }
         });
     });
