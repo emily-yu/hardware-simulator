@@ -28,6 +28,8 @@ with open('functions.txt') as f:
 def sentencify(params, functions):
     dictionary = {}
     rotate = 0
+    led_light = 0
+    delay_time = 0
 
     params = json.loads(params)
     functions = functions.split(',')
@@ -44,15 +46,22 @@ def sentencify(params, functions):
             syntax = syntaxes[index]
             if(syntax.strip() != ""):
                 same2 = syntax.split(': ')[1]
-                sentence += "The program will " + descriptions[index].lower() + "Where the parameter, " + syntax + "is " + dictionary[key][0] + ". "
+                sentence += "The program will " + descriptions[index].lower()[:-1] + "where the parameter, " + syntax + "is " + dictionary[key][0] + ". "
             else:
                 sentence += "The program will " + descriptions[index].lower()
+
             if(key == "write"):
                 rotate = int(dictionary[key][0])
+            elif(key == "digitalWrite"):
+                status = dictionary[key][1]
+                if(status == "HIGH"):
+                    led_light = 1
+            elif(key == "delay"):
+                delay_time = int(dictionary[key][0])
         else:
             sentence += "The program will do " + key + ". "
 
-    return sentence, rotate
+    return sentence, rotate, led_light, delay_time
 
 
 @route('/')
@@ -69,9 +78,9 @@ def sentence():
     params = jsonObj["params"]
     functions = jsonObj["functions"]
 
-    sentence,rotate = sentencify(params, functions)
+    sentence,rotate,led_light, delay_time = sentencify(params, functions)
 
-    return {"sentence":sentence, "rotate":rotate}
+    return {"sentence":sentence, "rotate":rotate, "light":led_light, "delay":delay_time}
 
 
 run(host='localhost', port=5000)
