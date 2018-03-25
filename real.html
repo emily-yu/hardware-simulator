@@ -113,7 +113,7 @@ $(document).ready(function(){
                     },
                     success: function(data) {
                       console.log(data)
-                      data = JSON.parse(data)
+                      
                     }
                   });
 //make some post request to me with important words function and params
@@ -203,7 +203,7 @@ TWEEN.Easing.Bounce.EaseInOut=function(a){if(a<0.5)return TWEEN.Easing.Bounce.Ea
             new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(90)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
             })
         });
-      
+
         // Add OrbitControls so that we can pan around with the mouse.
         controls = new THREE.OrbitControls(camera, renderer.domElement);
     }
