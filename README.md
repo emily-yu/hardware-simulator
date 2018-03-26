@@ -34,8 +34,5 @@ Replace the relative `python_ngrok` and `node_ngrok` variables in `real.html` wi
     
 	./ngrok http 8000
 	node array.js
-
-	./ngrok http 3000
-	node server.js
 	
-Open `localhost:3000` in Chrome.
+Run `server.js` and open `localhost:3000` in Chrome.
