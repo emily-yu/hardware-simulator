@@ -32,6 +32,9 @@ Replace the relative `python_ngrok` and `node_ngrok` variables in `real.html` wi
     ./ngrok http 5000
     python server.py
     
+	./ngrok http 8000
+	node array.js
+
 	./ngrok http 3000
 	node server.js
 	
