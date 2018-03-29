@@ -13,8 +13,9 @@ app.get('/', function(req,res){
 app.post('/interpret', function(req, res){
   var src = req.body.src
   console.log(src)
+
   var tokenized = tokenize(src)
-  // console.log(tokenized)
+  console.log(tokenized)
   var reorganized = {}
   var last_identifier = ""
   var open_paren = false
@@ -22,8 +23,8 @@ app.post('/interpret', function(req, res){
 
   var first_token = JSON.parse(tokenized[0])
   const types = ["int", "String", "float", "double", "bool", "char", "void", "Servo"]
-  console.log(first_token)
-  console.log(types.indexOf(first_token.source))
+
+
   if(types.indexOf(first_token.source) != -1 && first_token.source == identifier){
     reorganized[dot_original]["type"] = "variable"
   }

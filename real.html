@@ -34,11 +34,14 @@ $(function() {
 var client = "9103bae3380b17ceeef1db995419df20"
 var secret = "fe5ea8fe380d5076f0ef29ca4b968619069f4e0f94d2b15d4ac368695750cb97"
 
-const node_ngrok = 'http://69d674a0.ngrok.io'
-const python_ngrok = 'http://1aee12a1.ngrok.io'
+const node_ngrok = 'http://bbbea618.ngrok.io'
+const python_ngrok = 'https://d3dbc804.ngrok.io'
 const proxy = 'https://cors-anywhere.herokuapp.com/'
 
-console.log(document.getElementById("REEE").text)
+const loop = "loop()"
+const setup = "setup()"
+
+
 $(document).ready(function(){
     $('#disco').click(() => {
         setInterval(function() {
@@ -133,83 +136,110 @@ $(document).ready(function(){
               document.getElementById("message").innerHTML = data["output"]
             }
 
-            var lines = code.split("/\r?\n/");
+            var lines = code.split("\n");
 
-            for (var line in lines){
-              if(line.replace(/\s/g, "") == ""){
+            var inLoop = false
+            var inSetup = false
+            var setupLines = []
+            var loopLines = []
+
+            for (var i=0; i < lines.length; i++){
+              var line = lines[i].replace(/\s/g, '')
+              var commentCheck = line.substring(0,2)
+              if(commentCheck == "//" || line == ""){
                 continue
               }
+
               var options = {
                 src: code
               }
-              console.log(JSON.stringify(options))
-              $.ajax({
-                url: proxy + node_ngrok + "/interpret",
-                type: 'POST',
-                data: JSON.stringify(options),
-                headers:{
-                  'Content-Type':'application/json'
-                },
-                success: function(data) {
-                  data = JSON.parse(data)
 
-                  var importantwords = {};
-                  var params = {}
-                  for (var x in data){
-                    if(data[x]["params"].length != 0){
-                      importantwords[x] = data[x]
-                      params[x] = data[x]["params"]
-                    }
-                  }
-                  console.log(params)
-                  var keys = Object.keys(params)
-                  console.log(keys)
-                  var real_params = []
-                  for (var x in params){
-                    real_params.push(params[x])
-                  }
-
-                  var function_info = {
-                    functions: JSON.stringify(keys),
-                    params: JSON.stringify(real_params)
-                  }
-                  console.log(JSON.stringify(function_info))
-
-
-                  $.ajax({
-                    url: proxy + python_ngrok + "/sentence",
-                    type: 'POST',
-                    data: JSON.stringify(function_info),
-                    headers:{
-                      'Content-Type':'application/json'
-                    },
-                    success: function(data) {
-                      console.log(data)
-                      console.log(data["rotate"])
-                      var rotate = data["rotate"]
-                      var sentence = data["sentence"]
-                      console.log(sentence)
-
-                      // light code -- timeout for delay time
-                      if (data.light > 0) {
-                          light.intensity = 5
-                          setTimeout(() => {
-                            light.intensity = 1
-                          }, data.delay);
-                      }
-                      // servo code -- turn it
-                      else {
-                          new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
-                      }
-                      document.getElementById('message').innerHTML += '<br><br>' + sentence
-                      document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
-
-                    }
-                  });
-                }
-              });
+              if(line.includes(loop)){
+                inLoop = true
+              }
+              else if(inLoop == true && line.includes("}")){
+                inLoop = false
+              }
+              else if(line.includes(setup)){
+                inSetup = true
+              }
+              else if(inSetup == true && line.includes("}")){
+                inSetup = false
+              }
+              else if(inLoop == true){
+                loopLines.push(line)
+              }
+              else if(inSetup == true){
+                setupLines.push(line)
+              }
+              else{
+                //its a variable or comment, deal with later
+              }
             }
+            console.log(loopLines)
+            console.log(setupLines)
+            
+            $.ajax({
+              url: proxy + node_ngrok + "/interpret",
+              type: 'POST',
+              data: JSON.stringify(options),
+              headers:{
+                'Content-Type':'application/json'
+              },
+              success: function(data) {
+                data = JSON.parse(data)
 
+                var importantwords = {};
+                var params = {}
+                for (var x in data){
+                  if(data[x]["params"].length != 0){
+                    importantwords[x] = data[x]
+                    params[x] = data[x]["params"]
+                  }
+                }
+                console.log(params)
+                var keys = Object.keys(params)
+                console.log(keys)
+                var real_params = []
+                for (var x in params){
+                  real_params.push(params[x])
+                }
+
+                var function_info = {
+                  functions: JSON.stringify(keys),
+                  params: JSON.stringify(real_params)
+                }
+
+
+                $.ajax({
+                  url: proxy + python_ngrok + "/sentence",
+                  type: 'POST',
+                  data: JSON.stringify(function_info),
+                  headers:{
+                    'Content-Type':'application/json'
+                  },
+                  success: function(data) {
+                    var rotate = data["rotate"]
+                    var sentence = data["sentence"]
+
+                    // light code -- timeout for delay time
+                    if (data.light > 0) {
+                        light.intensity = 5
+                        setTimeout(() => {
+                          light.intensity = 1
+                        }, data.delay);
+                    }
+                    // servo code -- turn it
+                    else {
+                        new TWEEN.Tween( mesh.rotation ).to( {  x:  mesh.rotation.x + toRadians(rotate)}, 1000 ).easing( TWEEN.Easing.Quadratic.EaseOut).start();
+                    }
+                    document.getElementById('message').innerHTML += '<br><br>' + sentence
+                    document.getElementById('message').scrollTop = document.getElementById('message').scrollHeight;
+
+                  }
+                });
+              }
+            });
           }
       });
     });
