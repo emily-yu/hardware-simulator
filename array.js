@@ -1,21 +1,38 @@
 var express = require('express')
 var tokenizer = require('tokenizer-array')
 var bodyParser = require('body-parser')
+var engines = require('consolidate');
+
 const app = express()
+
+app.use(express.static(__dirname));
+app.set('view engine', 'hbs');
+app.set('views', __dirname);
+app.engine('html', engines.mustache);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+
 app.get('/', function(req,res){
+  res.render("real.html")
+})
+
+app.post('/setup', function(req,res){
+  var src=req.body.src
+
+})
+app.post('/loop', function(req,res){
+  var src=req.body.src
+
 })
 
 app.post('/interpret', function(req, res){
   var src = req.body.src
-  console.log(src)
 
   var tokenized = tokenize(src)
-  console.log(tokenized)
   var reorganized = {}
   var last_identifier = ""
   var open_paren = false
